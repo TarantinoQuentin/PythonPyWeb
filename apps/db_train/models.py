@@ -96,3 +96,35 @@ class Author(models.Model):
             self.age = today.year - self.date_birth.year - additional_year  # Перезаписываем значение
         super().save(*args, **kwargs)
 
+
+class AuthorProfile(models.Model):
+    author = models.OneToOneField('Author', on_delete=models.CASCADE)
+    stage = models.IntegerField(default=0,
+                                blank=True,
+                                verbose_name="Стаж",
+                                help_text="Стаж в годах")
+
+    def __str__(self):
+        if self.author and self.stage:
+            return f'Автор: {self.author.username}; Стаж: {self.stage} лет'
+
+
+class Entry(models.Model):
+    text = models.TextField(verbose_name="Текст статьи")
+    author = models.ForeignKey("Author", on_delete=models.CASCADE, related_name='entries')
+    tags = models.ManyToManyField("Tag", related_name='entries')
+
+    def __str__(self):
+        if self.text and self.author:
+            return f'{self.text[:10]}... — {self.author.username}'
+
+
+class Tag(models.Model):
+    name = models.CharField(max_length=50,
+                            verbose_name="Название")
+
+    def __str__(self):
+        if self.name:
+            return f'{self.name}'
+
+
