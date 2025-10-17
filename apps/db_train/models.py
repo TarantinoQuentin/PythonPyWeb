@@ -105,8 +105,7 @@ class AuthorProfile(models.Model):
                                 help_text="Стаж в годах")
 
     def __str__(self):
-        if self.author and self.stage:
-            return f'Автор: {self.author.username}; Стаж: {self.stage} лет'
+        return f'Автор: {self.author.username}; Стаж: {self.stage} лет'
 
 
 class Entry(models.Model):
