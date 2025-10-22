@@ -20,6 +20,8 @@ class TrainView(View):
         self.answer5 = round(((100 * true_status_rule_authors) / all_authors_count), 2)  # Какой процент авторов согласился с правилами при регистрации?
         authors_stage_range = AuthorProfile.objects.filter(stage__gte=1).filter(stage__lte=5).values_list("author__id")
         self.answer6 = Author.objects.filter(id__in=authors_stage_range)  # Какие авторы имеют стаж от 1 до 5 лет?
+        # self.answer6 = Author.objects.filter(authorprofile__stage__range=(1, 5))
+
         max_age_author = Author.objects.aggregate(max_age_author=Max('age'))
         self.answer7 = Author.objects.get(age=max_age_author['max_age_author'])  # Какой автор имеет наибольший возраст?
         self.answer8 = Author.objects.filter(phone_number__isnull=False).count()  # Сколько авторов указали свой номер телефона?

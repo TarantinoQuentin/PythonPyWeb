@@ -98,7 +98,7 @@ class Author(models.Model):
 
 
 class AuthorProfile(models.Model):
-    author = models.OneToOneField('Author', on_delete=models.CASCADE)
+    author = models.OneToOneField('Author', on_delete=models.CASCADE, related_name='abc')
     stage = models.IntegerField(default=0,
                                 blank=True,
                                 verbose_name="Стаж",
